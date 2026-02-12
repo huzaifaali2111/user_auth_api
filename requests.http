@@ -1,0 +1,26 @@
+### Register a new user
+POST http://localhost:3000/api/v1/users/register
+Content-Type: application/json
+
+{
+  "fullName": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "role": "user"
+}
+
+### Register an Admin (if you want to test roles)
+POST http://localhost:3000/api/v1/users/register
+Content-Type: application/json
+
+{
+  "fullName": "Admin User",
+  "email": "admin@example.com",
+  "password": "adminpassword",
+  "role": "admin"
+}
+
+### Get User Profile (Replace <TOKEN> with the token received from registration)
+GET http://localhost:3000/api/v1/users/profile
+Authorization: Bearer <TOKEN>
+Content-Type: application/json
