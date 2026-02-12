@@ -16,4 +16,12 @@ export class UserRepository {
   async findAll(): Promise<IUser[]> {
     return await User.find();
   }
+
+  async update(id: string, updateData: Partial<IUser>): Promise<IUser> {
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
+    if (!updatedUser) {
+      throw new Error('User not found');
+    }
+    return updatedUser;
+  }
 }
