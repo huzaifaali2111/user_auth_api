@@ -48,12 +48,12 @@ GET http://localhost:3000/api/v1/users
 Authorization: Bearer <TOKEN>
 Content-Type: application/json
 
-### Get User By ID (Replace <TOKEN> and <USER_ID>)
+### Get User By ID (Replace <TOKEN> with admin/user token and <USER_ID> with user id)
 GET http://localhost:3000/api/v1/users/<USER_ID>
 Authorization: Bearer <TOKEN>
 Content-Type: application/json
 
-### Block User (Replace <TOKEN> and <USER_ID>)
+### Block User (Replace <TOKEN> with admin/user token and <USER_ID> with user id)
 PATCH http://localhost:3000/api/v1/users/<USER_ID>/block
 Authorization: Bearer <TOKEN>
 Content-Type: application/json

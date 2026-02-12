@@ -26,7 +26,7 @@ export class UserService {
 
 const token = this.generateToken((newUser._id as unknown as string), newUser.role);
 
-    return { user: newUser, token };
+    return { user: this.sanitizeUser(newUser), token };
   }
 
   async getUserProfile(userId: string): Promise<IUser> {
@@ -34,7 +34,7 @@ const token = this.generateToken((newUser._id as unknown as string), newUser.rol
     if (!user) {
       throw new AppError('User not found', 404);
     }
-    return user;
+    return this.sanitizeUser(user);
   }
 
   async loginUser(email: string, password: string): Promise<{ user: IUser; token: string }> {
@@ -54,12 +54,12 @@ const token = this.generateToken((newUser._id as unknown as string), newUser.rol
 
     const token = this.generateToken((user._id as unknown as string), user.role);
 
-    return { user, token };
+    return { user: this.sanitizeUser(user), token };
   }
 
   async getAllUsers(): Promise<IUser[]> {
     const users = await this.userRepository.findAll();
-    return users;
+    return users.map(user => this.sanitizeUser(user));
   }
 
   async getUserById(id: string): Promise<IUser> {
@@ -67,7 +67,7 @@ const token = this.generateToken((newUser._id as unknown as string), newUser.rol
     if (!user) {
       throw new AppError('User not found', 404);
     }
-    return user;
+    return this.sanitizeUser(user);
   }
 
   async blockUser(id: string): Promise<IUser> {
@@ -77,7 +77,13 @@ const token = this.generateToken((newUser._id as unknown as string), newUser.rol
     }
 
     const updatedUser = await this.userRepository.update(id, { status: 'blocked' });
-    return updatedUser;
+    return this.sanitizeUser(updatedUser);
+  }
+
+  private sanitizeUser(user: IUser): IUser {
+    const userObject = user.toObject ? user.toObject() : JSON.parse(JSON.stringify(user));
+    delete (userObject as any).password;
+    return userObject as IUser;
   }
 
   private generateToken(id: string, role: string): string {
