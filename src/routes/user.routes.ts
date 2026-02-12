@@ -11,7 +11,7 @@ const registerSchema = z.object({
     fullName: z.string().min(2),
     email: z.string().email(),
     password: z.string().min(6),
-    role: z.enum(['admin', 'user']).optional(),
+    dob: z.string().datetime().optional(),
   }),
 });
 
@@ -51,9 +51,9 @@ const blockUserSchema = z.object({
  *                 type: string
  *               password:
  *                 type: string
- *               role:
+ *               dob:
  *                 type: string
- *                 enum: [user, admin]
+ *                 format: date-time
  *     responses:
  *       201:
  *         description: User created successfully

@@ -6,10 +6,10 @@ Content-Type: application/json
   "fullName": "Test User",
   "email": "test@example.com",
   "password": "password123",
-  "role": "user"
+  "dob": "1990-01-15T00:00:00Z"
 }
 
-### Register an Admin (if you want to test roles)
+### Register another user
 POST http://localhost:3000/api/v1/users/register
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
   "fullName": "Admin User",
   "email": "admin@example.com",
   "password": "adminpassword",
-  "role": "admin"
+  "dob": "1985-06-20T00:00:00Z"
 }
 
 ### Get User Profile (Replace <TOKEN> with the token received from registration)

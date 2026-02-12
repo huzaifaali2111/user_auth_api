@@ -22,6 +22,7 @@ export class UserService {
     const newUser = await this.userRepository.create({
       ...userData,
       password: hashedPassword,
+      role: 'user',
     });
 
 const token = this.generateToken((newUser._id as unknown as string), newUser.role);
@@ -83,6 +84,7 @@ const token = this.generateToken((newUser._id as unknown as string), newUser.rol
   private sanitizeUser(user: IUser): IUser {
     const userObject = user.toObject ? user.toObject() : JSON.parse(JSON.stringify(user));
     delete (userObject as any).password;
+    delete (userObject as any).__v;
     return userObject as IUser;
   }
 
